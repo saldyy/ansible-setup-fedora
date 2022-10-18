@@ -1,0 +1,19 @@
+---
+- name: Install k8s
+  become: true
+  hosts: localhost
+
+  tasks:
+    - name: Disable swap
+      ansible.builtin.shell: swappoff -a
+
+    - name: Download k8s binary
+      ansible.builtin.shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - name: Install k8s
+      ansible.builtin.shell: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+    - name: Download minikube
+      ansible.builtin.shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
+    - name: Install minikube
+      ansible.builtin.shell: sudo rpm -Uvh minikube-latest.x86_64.rpm
+
