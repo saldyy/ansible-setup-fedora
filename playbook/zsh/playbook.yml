@@ -8,4 +8,6 @@
       ansible.builtin.dnf:
         name: zsh
         state: latest
-
+    - name: Set ZSH as default shell for user
+      command: chsh -s $(wihch zsh)
+      changed_when: true  
