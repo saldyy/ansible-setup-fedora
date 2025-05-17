@@ -2,9 +2,8 @@
 - name: Install Neovim
   become: true
   hosts: localhost
-
   tasks:
-    - name: Install neovim package
+    - name: Install Neovim package
       ansible.builtin.dnf:
         name: neovim
         state: latest
@@ -18,22 +17,21 @@
       become: false
 - name: Clone private Git repository locally using SSH
   hosts: localhost
-  connection: local
+  become: false
   vars:
     repo_url: "git@github.com:saldyy/neovim-config.git"
     clone_dest: "{{ ansible_user_dir }}/.config/nvim"
-    ssh_key_path: "{{ ansible_user_dir }}/.ssh/id_rsa" 
+    ssh_key_path: "{{ ansible_user_dir }}/.ssh/saldyy_github_tp" 
 
   tasks:
-
-    - name: Add Git host to known_hosts to prevent prompts
+    - name: Add Git host to known_hosts
       known_hosts:
         path: "~/.ssh/known_hosts"
         name: "github.com"
         key: "{{ lookup('pipe', 'ssh-keyscan github.com') }}"
         state: present
 
-    - name: Clone the private Git repository using SSH
+    - name: Clone the private Git repository
       git:
         repo: "{{ repo_url }}"
         dest: "{{ clone_dest }}"
