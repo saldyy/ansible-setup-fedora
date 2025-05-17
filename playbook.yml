@@ -1,14 +1,17 @@
 ---
-- name: Install dependencies
-  become: true
-  hosts: localhost
-  tasks:
-    - name: Install xclip 
-      ansible.builtin.dnf:
-        name: xclip
-        state: latest
-- import_playbook: ./playbook/neovim/playbook.yml
-- import_playbook: ./playbook/docker/playbook.yml
-- import_playbook: ./playbook/zsh/playbook.yml
-- import_playbook: ./playbook/brave-browser/playbook.yml
-- import_playbook: ./playbook/vscode/playbook.yml
+# - name: Install dependencies
+#   become: true
+#   hosts: localhost
+#   tasks:
+#     - name: Install xclip 
+#       ansible.builtin.dnf:
+#         name:
+#           - xclip
+#           - openssl
+#         state: latest
+# - import_playbook: ./playbook/neovim/playbook.yml
+- import_playbook: ./playbook/wezterm/playbook.yml
+# - import_playbook: ./playbook/docker/playbook.yml
+# - import_playbook: ./playbook/zsh/playbook.yml
+# - import_playbook: ./playbook/brave-browser/playbook.yml
+# - import_playbook: ./playbook/vscode/playbook.yml
