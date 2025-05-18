@@ -1,4 +1,18 @@
 ---
+- name: Install dependencies
+  become: true
+  hosts: localhost
+  tasks:
+    - name: Install basic packages
+      ansible.builtin.dnf:
+        name: "{{ basic_packages }}"
+        state: present
+        allowerasing: true
+    - name: Install system tools
+      ansible.builtin.dnf:
+        name: "{{ sys_tools }}"
+        state: present
+        allowerasing: true
 # - name: Install dependencies
 #   become: true
 #   hosts: localhost
@@ -10,8 +24,8 @@
 #           - openssl
 #         state: latest
 # - import_playbook: ./playbook/neovim/playbook.yml
-- import_playbook: ./playbook/wezterm/playbook.yml
-- import_playbook: ./playbook/zsh/playbook.yml
+# - import_playbook: ./playbook/wezterm/playbook.yml
+# - import_playbook: ./playbook/zsh/playbook.yml
 # - import_playbook: ./playbook/docker/playbook.yml
 # - import_playbook: ./playbook/brave-browser/playbook.yml
 # - import_playbook: ./playbook/vscode/playbook.yml
