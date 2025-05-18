@@ -7,6 +7,7 @@ basic_packages:
   - fzf
   - jq
   - vlc
+  - openh264
   - gimp
   - rofi
 sys_tools:
