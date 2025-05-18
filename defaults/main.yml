@@ -1,5 +1,7 @@
 basic_packages:
   - xclip
+  - evince
+  - nautilus
   - openssl
   - neovim
   - fzf
