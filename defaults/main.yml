@@ -1,0 +1,12 @@
+basic_packages:
+  - xclip
+  - openssl
+  - neovim
+  - fzf
+  - jq
+  - vlc
+  - gimp
+  - rofi
+sys_tools:
+  - nmap
+  - htop
