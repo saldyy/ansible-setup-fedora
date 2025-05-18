@@ -5,6 +5,7 @@ basic_packages:
   - openssl
   - neovim
   - fzf
+  - tldr
   - jq
   - vlc
   - openh264
