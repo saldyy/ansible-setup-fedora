@@ -1,0 +1,28 @@
+---
+# - name: Install dependencies
+#   become: true
+#   hosts: localhost
+#   tasks:
+#     - name: Install basic packages
+#       ansible.builtin.dnf:
+#         name: "{{ basic_packages }}"
+#         state: present
+#         allowerasing: true
+#     - name: Install system tools
+#       ansible.builtin.dnf:
+#         name: "{{ sys_tools }}"
+#         state: present
+#         allowerasing: true
+# - import_playbook: ./playbook/neovim/playbook.yml
+# - import_playbook: ./playbook/wezterm/playbook.yml
+# - import_playbook: ./playbook/zsh/playbook.yml
+# - import_playbook: ./playbook/docker/playbook.yml
+- name: Install NVM
+  become: false
+  hosts: localhost
+  tasks:
+    - name: Installing
+      ansible.builtin.shell:
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# - import_playbook: ./playbook/brave-browser/playbook.yml
+# - import_playbook: ./playbook/vscode/playbook.yml
