@@ -11,6 +11,8 @@ basic_packages:
   - openh264
   - gimp
   - rofi
+  - flameshot
+  - peek
 sys_tools:
   - nmap
   - htop
