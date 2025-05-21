@@ -62,3 +62,42 @@
         name: docker
         enabled: true
         state: started
+- name: Install kubectl
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Download package
+      shell: >
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - name: Installing
+      ansible.builtin.copy:
+        src: kubectl
+        dest: /usr/local/bin/kubectl
+        owner: root
+        group: root
+        mode: '0755'
+    - name: Remove package
+      ansible.builtin.file:
+        path: ./kubectl
+        state: absent
+- name: Install minikube
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Download package
+      ansible.builtin.get_url:
+        dest: .
+        url: https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+    - name: Installing
+      ansible.builtin.copy:
+        src: minikube-linux-amd64
+        dest: /usr/local/bin/minikube
+        owner: root
+        group: root
+        mode: '0755'
+    - name: Remove package
+      ansible.builtin.file:
+        path: ./minikube-linux-amd64
+        state: absent
+
+
