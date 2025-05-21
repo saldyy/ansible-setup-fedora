@@ -36,9 +36,29 @@
       get_url:
         url: "{{ go_download_url }}"
         dest: "/tmp/{{ go_tarball }}"
-        mode: '0644'
     - name: Extract Golang tarball
       unarchive:
         src: "/tmp/{{ go_tarball }}"
         dest: "{{ go_install_dir }}"
-# - import_playbook: ./playbook/vscode/playbook.yml
+- name: Install Docker 
+  hosts: localhost
+  become: yes
+  vars:
+    ansible_user: saldyy
+  tasks:
+    - name: Add Docker CE repo
+      command: >
+        dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    - name: Installing
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+    - name: Enable Docker
+      ansible.builtin.systemd_service:
+        name: docker
+        enabled: true
+        state: started
