@@ -11,6 +11,7 @@ basic_packages:
   - openh264
   - gimp
   - rofi
+  - polybar
   - flameshot
   - peek
 sys_tools:
