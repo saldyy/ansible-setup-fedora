@@ -1,6 +1,8 @@
 [submodule "neovim-config"]
 	path = neovim-config
 	url = git@github.com:saldyy/neovim-config.git
+  branch = master
 [submodule "config-files"]
 	path = config-files
 	url = git@github.com:saldyy/config-files.git
+  branch = master
