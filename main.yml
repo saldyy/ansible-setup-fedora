@@ -16,6 +16,27 @@
 - import_playbook: ./playbook/neovim/playbook.yml
 - import_playbook: ./playbook/wezterm/playbook.yml
 - import_playbook: ./playbook/zsh/playbook.yml
+- name: Install NerdFonts
+  become: false
+  hosts: localhost
+  tasks:
+    - name: Download package
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/CommitMono.zip
+        dest: .
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: ~/.local/share/fonts
+        state: directory
+        mode: '0755'
+    - name: Unarchive package
+      ansible.builtin.unarchive:
+        src: ./CommitMono.zip
+        dest: ~/.local/share/fonts
+    - name: Remove package
+      ansible.builtin.file:
+        path: ./CommitMono.zip
+        state: absent
 - name: Install NVM
   become: false
   hosts: localhost
