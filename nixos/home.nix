@@ -20,6 +20,10 @@ in
   
   programs.git = {
     enable = true;
+    config = {
+      user.name = "Phillip Nguyen";
+      user.email = "png9981@gmail.com";
+    };
   };
 
   programs.zsh = {
