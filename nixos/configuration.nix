@@ -4,9 +4,16 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+  });
+in {
   imports =
     [ # Include the results of the hardware scan.
+      (import "${home-manager}/nixos")
+      nixvim.nixosModules.nixvim
       ./hardware-configuration.nix
 
       ./home.nix
@@ -70,14 +77,28 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    neovim
     git
     wezterm
     xclip
     tldr
     jq
     pkgs.zplug
+    nodejs_22
+    go
+    gopls
+    pkgs.fzf
   ];
+
+  users.users.saldyy = {
+    isNormalUser = true;
+    extraGroups = ["wheel" "networkmanager"];
+    packages = with pkgs; [
+      pkgs.brave
+      google-chrome
+    ];
+
+    shell = pkgs.zsh;
+  };
 
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {

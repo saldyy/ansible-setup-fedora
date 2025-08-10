@@ -1,21 +1,65 @@
 { config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
+
 {
   imports = [
-    (import "${home-manager}/nixos")
+    ./modules    
   ];
 
-  users.defaultUserShell = pkgs.zsh;
-  users.users.saldyy = {
-    isNormalUser = true;
-    packages = with pkgs; [
-      pkgs.brave
-      pkgs.zplug
-    ];
+  home-manager.users.saldyy = {
+    home.stateVersion = "25.05";
+  };
 
-    shell = pkgs.zsh;
+
+  programs.nixvim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+
+    luaLoader.enable = true;
+
+    plugins = {
+      nvim-surround.enable = true;
+    };
+
+    extraConfigLua = ''
+      vim.opt.relativenumber = true
+      vim.opt.relativenumber = true
+      vim.opt.number = true
+      
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.expandtab = true
+      
+      vim.autoindent = true
+      vim.smartindent = true
+      
+      vim.opt.autoread = true
+      
+      vim.opt.wrap = true
+      vim.opt.textwidth = 100
+      
+      vim.opt.clipboard = 'unnamedplus'
+      vim.opt.incsearch = false
+      vim.opt.hlsearch = false
+      
+      vim.cmd([[
+        augroup highlight_yank
+            autocmd!
+            au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=100 }
+        augroup END
+      ]])
+    '';
+
+    colorschemes = {
+      onedark = {
+        enable = true;
+        settings = {
+          style = "darker";
+        };
+      };
+    };
   };
   
   programs.git = {
