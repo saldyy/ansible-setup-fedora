@@ -123,6 +123,20 @@
         path: ./CommitMono.zip
         state: absent
 
+- name: Install TPM
+  become: true
+  hosts: localhost
+  vars:
+    tpm_dir: "/home/{{ user }}/.tmux/plugins/tpm"
+  tasks:
+    - name: Install TPM
+      become_user: "{{ user }}"
+      ansible.builtin.git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: "{{ tpm_dir }}"
+        depth: 1
+
+# TODO: replace with fnm
 - name: Install NVM
   become: false
   hosts: localhost
