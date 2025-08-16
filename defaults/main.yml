@@ -1,3 +1,5 @@
+user: saldyy
+
 basic_packages:
   # Desktop tools
   - gimp
@@ -16,30 +18,10 @@ basic_packages:
   - tldr
   - jq
   - ripgrep
+  - lazygit
 
   # Ricing
   - rofi
-  - polybar
-  # Waybar packages and dependencies
-  - gtkmm3
-  - jsoncpp
-  - libsigc++
-  - fmt
-  - wayland
-  - chrono-date
-  - spdlog
-  - libgtk-3-dev
-  - gobject-introspection
-  - libgirepository1.0-dev
-  - libpulse
-  - libnl
-  - libappindicator-gtk3
-  - libdbusmenu-gtk3
-  - libmpdclient 
-  - libsndio 
-  - libevdev 
-  - xkbregistry
-  - upower 
 
   # Sway packages and dependencies
   - sway

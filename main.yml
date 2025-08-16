@@ -1,4 +1,10 @@
 ---
+- name: Enable COPR repositories
+  become: yes
+  hosts: localhost
+  tasks:
+    - name: Enable COPR repositories
+      ansible.builtin.shell: dnf copr enable -y dejan/lazygit
 - name: Install dependencies
   become: true
   hosts: localhost
@@ -13,6 +19,7 @@
         name: "{{ sys_tools }}"
         state: present
         allowerasing: true
+
 - name: Install Neovim
   become: true
   hosts: localhost
@@ -29,6 +36,7 @@
       args:
         executable: /bin/bash
       become: false
+
 - name: Install Wezterm
   become: true
   hosts: localhost
@@ -44,15 +52,55 @@
       ansible.builtin.file:
         path: ./wezterm-nightly-fedora40.rpm
         state: absent
+
 - name: Install zsh shell
   become: true
   hosts: localhost
-
+  vars:
+    omz_dir: "/home/{{ user }}/.oh-my-zsh"
   tasks:
     - name: Install zsh
       ansible.builtin.dnf:
         name: zsh
         state: latest
+    - name: Set user shell to zsh
+      ansible.builtin.user:
+        name: "{{ user }}"
+        shell: /bin/zsh
+      become: true
+    - name: Install Oh My Zsh # noqa: latest
+      become_user: "{{ user }}"
+      ansible.builtin.git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: "{{ omz_dir }}"
+        depth: 1
+    - name: Install zsh-autosuggestions plugin # noqa: latest
+      become_user: "{{ user }}"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: "{{ omz_dir }}/custom/plugins/zsh-autosuggestions"
+        depth: 1
+    - name: Install zsh-completions plugin # noqa: latest
+      become_user: "{{ user }}"
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-completions
+        dest: "{{ omz_dir }}/custom/plugins/zsh-completions"
+        depth: 1
+    - name: Copy Dracula theme
+      ansible.builtin.copy:
+        src: "./config-files/dracula-theme/zsh/dracula.zsh-theme"
+        dest: "{{ omz_dir }}/themes"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '744'
+    - name: Copy Dracula theme lib
+      ansible.builtin.copy:
+        src: "./config-files/dracula-theme/zsh/lib"
+        dest: "{{ omz_dir }}/themes"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '744'
+
 - name: Install NerdFonts
   become: false
   hosts: localhost
@@ -74,6 +122,7 @@
       ansible.builtin.file:
         path: ./CommitMono.zip
         state: absent
+
 - name: Install NVM
   become: false
   hosts: localhost
@@ -81,10 +130,12 @@
     - name: Installing
       ansible.builtin.shell:
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
 - name: Install Golang 
   hosts: localhost
   become: yes
   vars:
+
     go_version: "1.24.3"
     go_tarball: "go{{ go_version }}.linux-amd64.tar.gz"
     go_download_url: "https://go.dev/dl/{{ go_tarball }}"
@@ -98,6 +149,14 @@
       unarchive:
         src: "/tmp/{{ go_tarball }}"
         dest: "{{ go_install_dir }}"
+    - name: Remove tarball
+      ansible.builtin.file:
+        path: "/tmp/{{ go_tarball }}"
+        state: absent
+    - name: Install Golang lint
+      ansible.builtin.shell: >
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.4.0
+
 - name: Install Docker 
   hosts: localhost
   become: yes
@@ -120,6 +179,7 @@
         name: docker
         enabled: true
         state: started
+
 - name: Install kubectl
   hosts: localhost
   become: yes
@@ -138,6 +198,7 @@
       ansible.builtin.file:
         path: ./kubectl
         state: absent
+
 - name: Install minikube
   hosts: localhost
   become: yes
