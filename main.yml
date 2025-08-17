@@ -5,6 +5,7 @@
   tasks:
     - name: Enable COPR repositories
       ansible.builtin.shell: dnf copr enable -y dejan/lazygit
+
 - name: Install dependencies
   become: true
   hosts: localhost

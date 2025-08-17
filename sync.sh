@@ -4,12 +4,14 @@ sync() {
   rsync ./config-files/gitconfig ~/.gitconfig
   rsync ./config-files/tmux.conf ~/.tmux.conf
   rsync ./config-files/zshrc ~/.zshrc
+  rsync ./config-files/xinitrc ~/.xinitrc
 }
 
 backup() {
   rsync ~/.gitconfig ./config-files/gitconfig 
   rsync ~/.tmux.conf ./config-files/tmux.conf 
   rsync ~/.zshrc ./config-files/zshrc 
+  rsync ~/.xinitrc ./config-files/xinitrc
 }
 
 # Main logic: check argument

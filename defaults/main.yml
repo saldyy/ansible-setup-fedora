@@ -10,6 +10,12 @@ basic_packages:
   - openh264
   - evince
 
+  # Keyboard
+  - fcitx5
+  - fcitx5-configtool
+  - fcitx5-qt
+  - fcitx5-unikey
+
   # Terminal & development tools
   - xclip
   - openssl
