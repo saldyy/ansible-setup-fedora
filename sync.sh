@@ -5,9 +5,9 @@ sync() {
   rsync ./config-files/tmux.conf ~/.tmux.conf
   rsync ./config-files/zshrc ~/.zshrc
 
-  rsync -r ./config-files/config/sway ~/.config/sway
-  rsync -r ./config-files/config/polybar ~/.config/polybar
-  rsync -r ./config-files/config/wezterm ~/.config/wezterm
+  rsync -av ./config-files/config/sway/ ~/.config/sway/
+  rsync -av ./config-files/config/waybar/ ~/.config/waybar/
+  rsync -av ./config-files/config/wezterm/ ~/.config/wezterm/
 
   rsync -av ./neovim-config/ ~/.config/nvim/ 
 }
@@ -17,9 +17,9 @@ backup() {
   rsync ~/.tmux.conf ./config-files/tmux.conf 
   rsync ~/.zshrc ./config-files/zshrc 
 
-  rsync -r ~/.config/sway/ ./config-files/config/sway
-  rsync -r ~/.config/polybar ./config-files/config/polybar
-  rsync -r ~/.config/wezterm ./config-files/config/wezterm
+  rsync -av ~/.config/sway/ ./config-files/config/sway/
+  rsync -av ~/.config/waybar/ ./config-files/config/waybar/
+  rsync -av ~/.config/wezterm/ ./config-files/config/wezterm/
 
   rsync -av ~/.config/nvim/ ./neovim-config/
 }
