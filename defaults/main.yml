@@ -3,12 +3,13 @@ user: saldyy
 basic_packages:
   # Desktop tools
   - gimp
-  - flameshot
+  - grimshot
   - nautilus
   - peek
   - vlc
   - openh264
   - evince
+  - obs-studio
 
   # Keyboard
   - fcitx5
@@ -58,3 +59,4 @@ basic_packages:
 sys_tools:
   - nmap
   - htop
+  - xrandr
