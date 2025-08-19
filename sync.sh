@@ -4,14 +4,24 @@ sync() {
   rsync ./config-files/gitconfig ~/.gitconfig
   rsync ./config-files/tmux.conf ~/.tmux.conf
   rsync ./config-files/zshrc ~/.zshrc
-  rsync ./config-files/xinitrc ~/.xinitrc
+
+  rsync -r ./config-files/config/sway ~/.config/sway
+  rsync -r ./config-files/config/polybar ~/.config/polybar
+  rsync -r ./config-files/config/wezterm ~/.config/wezterm
+
+  rsync -av ./neovim-config/ ~/.config/nvim/ 
 }
 
 backup() {
   rsync ~/.gitconfig ./config-files/gitconfig 
   rsync ~/.tmux.conf ./config-files/tmux.conf 
   rsync ~/.zshrc ./config-files/zshrc 
-  rsync ~/.xinitrc ./config-files/xinitrc
+
+  rsync -r ~/.config/sway/ ./config-files/config/sway
+  rsync -r ~/.config/polybar ./config-files/config/polybar
+  rsync -r ~/.config/wezterm ./config-files/config/wezterm
+
+  rsync -av ~/.config/nvim/ ./neovim-config/
 }
 
 # Main logic: check argument
