@@ -107,18 +107,8 @@ install_zsh() {
 }
 
 install_ghostty() {
-  DRACULA_GHOSTTY_THEME_DIR="$THEMES_DIR/dracula-ghostty"
-  GHOSTTY_CONFIG_DIR="$HOME/.config/ghostty"
-
   sudo dnf5 copr enable -y scottames/ghostty
   sudo dnf5 install -y ghostty
-
-  # Install Dracula theme
-  create_dir $THEMES_DIR
-  create_dir "$GHOSTTY_CONFIG_DIR/themes"
-  rm -rf $DRACULA_GHOSTTY_THEME_DIR
-  git clone https://github.com/dracula/ghostty.git $DRACULA_GHOSTTY_THEME_DIR
-  ln -fs $DRACULA_GHOSTTY_THEME_DIR/dracula "$GHOSTTY_CONFIG_DIR/themes"
 }
 
 init() {
