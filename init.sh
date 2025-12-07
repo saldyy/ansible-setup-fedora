@@ -1,5 +1,13 @@
 #!/bin/bash
 
+THEMES_DIR="$(pwd)/themes"
+
+create_dir() {
+  if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+  fi
+}
+
 install_packages() {
   # Enable COPR repositories
   dnf copr enable -y dejan/lazygit
@@ -77,10 +85,31 @@ install_neovim() {
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
+install_zsh() {
+  # KEEP_ZSHRC="yes"
+  #
+  # sudo dnf5 install -y zsh
+  # sudo chsh -s $(which zsh)
+  # # Install Oh My Zsh
+  # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  #
+  # # Install zsh-autosuggestions/completions plugins
+  # git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH}/custom/plugins/zsh-autosuggestions"
+  # git clone https://github.com/zsh-users/zsh-completions "${ZSH}/custom/plugins/zsh-completions"
+  
+  # Copy Dracula theme
+  DRACULA_ZSH_THEME_DIR="${THEMES_DIR}/dracula-zsh"
+  create_dir $THEMES_DIR
+
+  git clone https://github.com/dracula/zsh.git $THEMES_DIR/dracula-zsh
+  ln -fs $DRACULA_ZSH_THEME_DIR/dracula.zsh-theme "${ZSH}/themes"
+}
+
 
 init() {
-  install_packages
+  # install_packages
   # install_neovim
+  install_zsh
 }
 
 
